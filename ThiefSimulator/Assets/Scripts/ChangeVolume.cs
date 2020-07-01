@@ -6,6 +6,7 @@ public class ChangeVolume : MonoBehaviour
 {
     private AudioSource audio;
     private bool play;
+    private float changeVoluneDelta = 0.1f;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class ChangeVolume : MonoBehaviour
 
     public IEnumerator AddVolume()
     {
-        audio.volume += 0.1f;
+        audio.volume += changeVoluneDelta;
         yield return null;
     }
 
