@@ -8,7 +8,7 @@ public class Plarform : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Movement>(out Movement player))
         {
-            player.ChangeCanMove(true);
+            player.UnFreezMovement();
         }
     }
 
@@ -16,7 +16,7 @@ public class Plarform : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Movement>(out Movement player))
         {
-            player.ChangeCanMove(false);
+            player.FreezMovement();
         }
     }  
 }

@@ -10,41 +10,46 @@ public class Movement : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
 
-    public bool CanMove { get; private set; }
+    private bool _canMove;
 
-    void Start()
+    private void Start()
     {
-        CanMove = true;
+        _canMove = true;
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(CanMove == true) { 
-        if (Input.GetKey(KeyCode.D))
+        if (_canMove == true)
         {
-            transform.Translate(Vector3.right * _speed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Translate(Vector3.right * _speed * Time.deltaTime);
                 _animator.SetTrigger("Move");
 
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.left * _speed * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Translate(Vector3.left * _speed * Time.deltaTime);
                 _animator.SetTrigger("Move");
             }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            _rigidbody2D.AddForce(_forceJump);
-        }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _rigidbody2D.AddForce(_forceJump);
+            }
         }
         _animator.SetTrigger("Don't move");
     }
 
 
-    public void ChangeCanMove(bool change)
+    public void FreezMovement()
     {
-        CanMove = change;
+        _canMove = false;
+    }
+
+    public void UnFreezMovement()
+    {
+        _canMove = true;
     }
 }
