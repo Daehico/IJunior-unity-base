@@ -5,13 +5,13 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     [SerializeField] private int _coinCost;
+    [SerializeField] private Player player;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent<Movement>(out Movement player))
         {
-            Statisticks.ChangeCoins(_coinCost);
-            Debug.Log($"Монетки {Statisticks.Coins}");
+            this.player.AddCoins(_coinCost);
             Destroy(gameObject);
         }
     }

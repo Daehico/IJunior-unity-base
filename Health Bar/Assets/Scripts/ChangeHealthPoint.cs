@@ -8,35 +8,33 @@ public class ChangeHealthPoint : MonoBehaviour
 {
     [SerializeField] private Slider slider;
 
-    private bool hpChanged = false;
-    private bool healOrDamage;
-    private float cooldown;
+    private bool _healOrDamage;
+    private float _cooldown;
+    private float _healthChanged = 10f;
+    private float _healthChangedDelta = 0.1f;
 
     public void ChangeHP(bool heal)
     {
-        hpChanged = true;
-        healOrDamage = heal;
-          
+        _healOrDamage = heal;
+        StartCoroutine(HPChangedCoroutine());
     }
 
-    private void Update()
+    IEnumerator HPChangedCoroutine()
     {
-        if(hpChanged == true)
+        while (_cooldown < _healthChanged)
         {
-            if(healOrDamage == true)
+           
+            if (_healOrDamage == true)
             {
-                slider.value += 0.1f;
+                slider.value += _healthChangedDelta;
             }
             else
             {
-                slider.value -= 0.1f;
+                slider.value -= _healthChangedDelta;
             }
-            cooldown += 0.1f;
-            if(cooldown >= 10)
-            {
-                hpChanged = false;
-                cooldown = 0;
-            }
+            _cooldown += _healthChangedDelta;
+            yield return null;
         }
+        _cooldown = 0;
     }
 }
