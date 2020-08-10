@@ -4,9 +4,9 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeHealthPoint : MonoBehaviour
+public class HealthPointsChanger : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
+    [SerializeField] private Slider _slider;
 
     private bool _healOrDamage;
     private float _cooldown;
@@ -16,21 +16,21 @@ public class ChangeHealthPoint : MonoBehaviour
     public void ChangeHP(bool heal)
     {
         _healOrDamage = heal;
-        StartCoroutine(HPChangedCoroutine());
+        StartCoroutine(HPChanged());
     }
 
-    IEnumerator HPChangedCoroutine()
+    IEnumerator HPChanged()
     {
         while (_cooldown < _healthChanged)
         {
            
             if (_healOrDamage == true)
             {
-                slider.value += _healthChangedDelta;
+                _slider.value += _healthChangedDelta;
             }
             else
             {
-                slider.value -= _healthChangedDelta;
+                _slider.value -= _healthChangedDelta;
             }
             _cooldown += _healthChangedDelta;
             yield return null;
