@@ -18,16 +18,15 @@ public class TowerAtack : MonoBehaviour
     private void Shoot()
     {
         var bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
-        bullet.SetTowerAtack(gameObject.GetComponent<TowerAtack>());
         _bullets.Add(bullet);
         _currentTime = 0;
     }
 
-    public void DestroyAllBullets()
+    private void DestroyAllBullets()
     {
         foreach(var bullet in _bullets)
         {
-            Destroy(bullet);
+            Destroy(bullet);      
         }
         _bullets.Clear();
     }

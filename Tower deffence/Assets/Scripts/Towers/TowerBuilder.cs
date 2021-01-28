@@ -5,19 +5,14 @@ using UnityEngine;
 public class TowerBuilder : MonoBehaviour
 {
     [SerializeField] private Tower _tower;
+    [SerializeField] private Player _player;
+    [SerializeField] private int _price;
 
-    private void Update()
+    public void BuildTower(GameObject towerBuilder)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit2D _raycastHit2D = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            if(_raycastHit2D.collider.TryGetComponent(out TowerBuilder towerBuilder))
-            {
-                var tower =Instantiate(_tower, transform.position,Quaternion.identity);
-                tower.transform.Rotate(new Vector3(0, 0, -180));
-                gameObject.SetActive(false);
-            }
-
-        }
+        var tower = Instantiate(_tower, towerBuilder.transform.position, Quaternion.identity);
+        tower.transform.Rotate(new Vector3(0, 0, -180));
+        towerBuilder.SetActive(false);
+        _player.AddGold(-_price);
     }
 }

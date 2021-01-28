@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
 
     public int Damage => _damage;
 
-    public event UnityAction EnemyDying;
     public event UnityAction EnemyHealthChanged;
 
     private void Update()
@@ -32,7 +31,6 @@ public class Enemy : MonoBehaviour
     private void EnemyDie()
     {
         _player.AddGold(_goldForKill);
-        EnemyDying?.Invoke();
         Destroy(gameObject);
     }
 }

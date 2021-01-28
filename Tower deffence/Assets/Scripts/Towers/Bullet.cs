@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,17 +11,6 @@ public class Bullet : MonoBehaviour
 
     private Vector3 _target;
     private Enemy _enemyTarget;
-    private TowerAtack _towerAtack;
-
-    private void OnEnable()
-    {
-        _enemy.EnemyDying += ChangeTarget;
-    }
-
-    private void OnDisable()
-    {
-        _enemy.EnemyDying -= ChangeTarget;
-    }
 
     private void Start()
     {
@@ -29,13 +19,13 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        _target = _enemyTarget.transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
-    }
-
-    public void SetTowerAtack(TowerAtack towerAtack)
-    {
-        _towerAtack = towerAtack;
+        if (_enemyTarget == null)
+            Destroy(gameObject);
+        else
+        {
+            _target = _enemyTarget.transform.position;
+            transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
+        }       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -49,7 +39,6 @@ public class Bullet : MonoBehaviour
 
     private void ChangeTarget()
     {
-        _enemyTarget = FindObjectOfType<Enemy>();
-        _towerAtack.DestroyAllBullets();
+        _enemyTarget = FindObjectOfType<Enemy>();        
     }
 }
