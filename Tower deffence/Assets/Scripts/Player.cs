@@ -20,12 +20,6 @@ public class Player : MonoBehaviour
         Gold = 100;
     }
 
-    private void Update()
-    {
-        if (_health <= 0)
-            PlyerDie();
-    }
-
     public void AddGold(int gold)
     {
         Gold += gold;
@@ -36,6 +30,8 @@ public class Player : MonoBehaviour
     {
         _health -= damage;
         HealthChanged?.Invoke(_health);
+        if (_health <= 0)
+            PlyerDie();
     }
 
     private void PlyerDie()

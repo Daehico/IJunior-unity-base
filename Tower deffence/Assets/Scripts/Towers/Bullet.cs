@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     private Vector3 _target;
     private Enemy _enemyTarget;
 
+
     private void Start()
     {
         ChangeTarget();
@@ -20,7 +21,9 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         if (_enemyTarget == null)
-            Destroy(gameObject);
+        {
+            ChangeTarget();
+        }      
         else
         {
             _target = _enemyTarget.transform.position;
@@ -40,5 +43,12 @@ public class Bullet : MonoBehaviour
     private void ChangeTarget()
     {
         _enemyTarget = FindObjectOfType<Enemy>();        
+    }
+
+    public Enemy SetEnemy()
+    {
+        if (_enemyTarget != null)
+            return _enemyTarget;
+        return null;
     }
 }

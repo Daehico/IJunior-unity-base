@@ -14,18 +14,14 @@ public class Enemy : MonoBehaviour
 
     public event UnityAction EnemyHealthChanged;
 
-    private void Update()
-    {
-        if(_health<= 0)
-        {
-            EnemyDie();
-        }
-    }
-
     public void ApplyDamage(int damage)
     {
         _health -= damage;
         EnemyHealthChanged?.Invoke();
+        if (_health <= 0)
+        {
+            EnemyDie();
+        }
     }
 
     private void EnemyDie()
