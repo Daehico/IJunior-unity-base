@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private int _damage;
 
+    public int Health => _health;
     public int Damage => _damage;
 
     public event UnityAction EnemyHealthChanged;

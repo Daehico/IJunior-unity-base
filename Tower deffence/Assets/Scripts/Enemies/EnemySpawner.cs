@@ -13,6 +13,7 @@ public class EnemySpawner : MonoBehaviour
     private float _curentTime;
 
     public event UnityAction<int, int> CountOfMobChanged;
+    public event UnityAction Win;
 
     private void Start()
     {
@@ -23,7 +24,18 @@ public class EnemySpawner : MonoBehaviour
     {
         _curentTime += Time.deltaTime;
         if (_curentTime >= _delay && _curentSpawnedEnemies <= _countOfEnemies)
+        {
             Spawn();
+        }
+        else
+        {
+            var enemy = FindObjectOfType<Enemy>();
+            if(enemy == null)
+            {
+                InvokeWinEvent();
+            }
+        }
+
     }
 
     private void Spawn()
@@ -32,5 +44,10 @@ public class EnemySpawner : MonoBehaviour
         _curentSpawnedEnemies++;
         _curentTime = 0f;
         CountOfMobChanged?.Invoke(_curentSpawnedEnemies, _countOfEnemies);
+    }
+
+    private void InvokeWinEvent()
+    {
+        Win?.Invoke();
     }
 }

@@ -25,7 +25,6 @@ public class TowerAtack : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_lastspawnedbullet);
         if (_lastspawnedbullet != null)
         {
             _enemy = _lastspawnedbullet.SetEnemy();  

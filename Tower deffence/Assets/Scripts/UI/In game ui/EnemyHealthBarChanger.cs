@@ -1,19 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Enemy))]
 public class EnemyHealthBarChanger : MonoBehaviour
 {
-    [SerializeField] private GameObject _curentHealthBar;
+    [SerializeField] private Slider _slider;
 
     private Enemy _enemy;
-    private int maxHealth;
-
-    private void Awake()
-    {
-        _enemy = GetComponent<Enemy>();
-    }
 
     private void OnEnable()
     {
@@ -25,9 +20,15 @@ public class EnemyHealthBarChanger : MonoBehaviour
         _enemy.EnemyHealthChanged -= OnHealthChanged;
     }
 
+    private void Awake()
+    {
+        _enemy = GetComponent<Enemy>();
+        _slider.maxValue = _enemy.Health;
+        _slider.value = _enemy.Health;
+    }
+
     private void OnHealthChanged()
     {
-        _curentHealthBar.transform.localScale = new Vector3(_curentHealthBar.transform.localScale.x - 10, _curentHealthBar.transform.localScale.y);
-        _curentHealthBar.transform.position = new Vector3(_curentHealthBar.transform.position.x - 0.25f, _curentHealthBar.transform.position.y);
+        _slider.value = _enemy.Health;
     }
 }
