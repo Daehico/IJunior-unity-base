@@ -27,8 +27,12 @@ public class TowerAtack : MonoBehaviour
     {
         if (_lastspawnedbullet != null)
         {
-            _enemy = _lastspawnedbullet.SetEnemy();  
-            transform.LookAt(_enemy.transform, new Vector3(0,0,-_enemy.transform.position.z));
+            _enemy = _lastspawnedbullet.SetEnemy();
+            //transform.LookAt(_enemy.transform, new Vector3(0,0,-_enemy.transform.position.z));
+            Vector3 direction = _enemy.transform.position - transform.position;
+            Vector3 newDirection = new Vector3(0f, 0f, direction.z);
+            Quaternion targetRotation = Quaternion.Euler(-newDirection);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
         }
     }
 

@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
     private Vector3 _target;
     private Enemy _enemyTarget;
 
+    private Vector3 _lastTargetPosition;
+
 
     private void Start()
     {
@@ -22,27 +24,34 @@ public class Bullet : MonoBehaviour
     {
         if (_enemyTarget == null)
         {
-            ChangeTarget();
-        }      
+            if(transform.position == _target)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
+            }           
+        }
         else
         {
             _target = _enemyTarget.transform.position;
             transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
-        }       
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out Enemy enemy))
+        if (collision.TryGetComponent(out Enemy enemy))
         {
             Destroy(gameObject);
-            enemy.ApplyDamage(_damage);         
+            enemy.ApplyDamage(_damage);
         }
     }
 
     private void ChangeTarget()
     {
-        _enemyTarget = FindObjectOfType<Enemy>();        
+        _enemyTarget = FindObjectOfType<Enemy>();
     }
 
     public Enemy SetEnemy()
@@ -51,4 +60,5 @@ public class Bullet : MonoBehaviour
             return _enemyTarget;
         return null;
     }
+
 }
